@@ -7,10 +7,12 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/yangchuansheng/argocd-lab.git
+    # 指定从哪里读取项目
+    repoURL: https://github.com/lgjava/my-argocd.git
     targetRevision: HEAD
     path: dev
   destination: 
+    # server似乎是固定的
     server: https://kubernetes.default.svc
     namespace: myapp
   # 指定自动同步策略和频率，不配置时需要手动触发同步。
