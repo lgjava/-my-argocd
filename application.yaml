@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/yangchuansheng/argocd-lab.git
+    targetRevision: HEAD
+    path: dev
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: myapp
+  # 指定自动同步策略和频率，不配置时需要手动触发同步。
+  syncPolicy:
+    # 定义同步方式
+    syncOptions:
+    # 如果不存在这个 namespace，就会自动创建它。
+    - CreateNamespace=true
+    # 检测到实际状态与期望状态不一致时，采取何种同步措施。
+    automated:
+      # 当集群实际状态不符合期望状态时，自动同步。
+      selfHeal: true
+      # 自动同步时，删除 Git 中不存在的资源
+      prune: true
